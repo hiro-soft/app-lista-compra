@@ -1,0 +1,77 @@
+<!--
+Generated template for the ListasFichaPage page.
+
+See http://ionicframework.com/docs/components/#navigation for more info on
+Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar color="secondary">
+        <ion-title>{{lista.nombre}}</ion-title>
+    </ion-navbar>
+
+    <ion-toolbar color="success" no-padding>
+        <form (ngSubmit)="anadirProducto()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-10 text-center>
+                        <ion-item>
+                            <ion-input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Escribe el nombre de un producto"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col col-2 text-center>
+                        <button ion-button icon-only color="secondary" type="submit" *ngIf="nombre.length > 0"><ion-icon name="add"></ion-icon></button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content padding>
+
+    <div *ngIf="lista.productosPendientes.length == 0 && lista.productosComprados.length == 0">
+        <p text-justify>Pulsa el botón <span class="boton"><ion-icon name="microphone"></ion-icon></span> situado en la esquina inferior derecha para añadir productos usando el dictado por voz.</p>
+
+        <p text-justify>También puedes usar el campo de texto situado arriba para introducirlos usando el teclado</p>
+    </div>
+
+    <ion-list class="listadoProductosPendientes" *ngIf="lista.productosPendientes.length > 0">
+        <ion-list-header>
+            Productos en la lista
+        </ion-list-header>
+        <ion-item *ngFor="let producto of lista.productosPendientes">
+            <ion-label>{{producto.nombre}}</ion-label>
+            <ion-buttons item-end>
+                <button ion-button icon-only color="secondary" (click)="comprarProducto(producto)">
+                    <ion-icon name="cart"></ion-icon>
+                </button>
+                <button ion-button icon-only color="primary" (click)="eliminarProducto(producto)">
+                    <ion-icon name="trash"></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-item>
+
+    </ion-list>
+    <ion-list class="listadoProductosComprados" *ngIf="lista.productosComprados.length > 0">
+        <ion-list-header>
+            Productos comprados
+        </ion-list-header>
+        <ion-item *ngFor="let producto of lista.productosComprados">
+            <ion-label>{{producto.nombre}}</ion-label>
+            <ion-buttons item-end>
+                <button ion-button icon-only color="secondary" (click)="pasarALaLista(producto)">
+                    <ion-icon name="redo"></ion-icon>
+                </button>
+                <button ion-button icon-only color="primary" (click)="eliminarProductoComprado(producto)">
+                    <ion-icon name="trash"></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-item>
+    </ion-list>
+    <ion-fab right bottom>
+        <button ion-fab color="warning" (click)="iniciarReconocimiento()" *ngIf="!grabando"><ion-icon name="microphone"></ion-icon></button>
+        <button ion-fab color="danger" *ngIf="grabando" (click)="pararReconocimiento()"><ion-icon name="recording"></ion-icon></button>
+    </ion-fab>
+</ion-content>

@@ -1,0 +1,5 @@
+page-listas-ficha {
+    .listadoProductosPendientes ion-item:last-child, .listadoProductosComprados ion-item:last-child{
+        margin-bottom: 60px;
+    }
+}
